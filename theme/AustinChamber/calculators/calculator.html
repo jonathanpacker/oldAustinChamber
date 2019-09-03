@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html class="no-js" lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>FTZC</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="calculator.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script type='text/javascript' src='../js/modernizr-1461700091.js'></script>
+    <script type='text/javascript'>
+    jQuery(function($) {
+        /*
+    * Tooltips
+    */
+    var hide_tooltip = [];
+    $('.no-touch .mb-tooltip').on('mouseenter', function(e) {
+        var $this = $(this),
+                id = $this.data('tooltip-id');
+
+        //get tooltip
+        $tooltip = $this.children('.mb-tooltip-content');
+        //fix positioning
+        var left_offset = $this.width()/1.5;
+        $tooltip.css('left', left_offset + 'px' );
+
+        //display tooltip
+        if(id in hide_tooltip) {
+            window.clearTimeout(hide_tooltip[id]); // clear timeout to hide the tooltip
+        }
+
+        setTimeout(function(){ $tooltip.addClass("visible"); }, 100);
+
+        e.preventDefault();
+    });
+
+    $('.mb-tooltip').on('mouseleave', function() {
+        var $this = $(this),
+                id = $this.data('tooltip-id');
+
+        hide_tooltip[id] = window.setTimeout(function() {
+            $this.children('.mb-tooltip-content').removeClass("visible");
+        }, 300);
+    });
+
+    // prevent default click, tooltip toggle on mobile
+    $('.mb-tooltip').on('click', function(e) {
+        if(Modernizr.touch) {
+            var $tooltip = $(this).children('.mb-tooltip-content'),
+                    left_offset = $(this).width()/2,
+                    cur_offset = $tooltip.offset().left;
+            if (cur_offset < left_offset) {
+                $tooltip.css('left', -cur_offset + 'px' );
+            } else if ((cur_offset + $tooltip.outerWidth()) > ($(window).width() + left_offset)) {
+                $tooltip.css('left', -(cur_offset + $tooltip.outerWidth()) - $(window).width() + 'px' );
+            } else {
+                $tooltip.css('left', left_offset + 'px' );
+            }
+            $tooltip.toggleClass("visible");
+        }
+        e.preventDefault();
+    });
+    });
+
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="alert">The FTZ calculator requires a modern browser to function. It will not work in older versions of Internet Explorer (versions 9 and previous).</p>
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="inputA" class="col-sm-9 control-label">Estimated Annual Entered <a href="#" class="mb-tooltip">Value of Imports<span class="mb-tooltip-content">Enter value without dollar sign or commas.</span></a></label>
+
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control" id="inputA" placeholder="A">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputB" class="col-sm-9 control-label">Estimated Annual <a href="#" class="mb-tooltip">Duty Paid for Imported Goods<span class="mb-tooltip-content">Enter value without dollar sign or commas.</span></a></label>
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control" id="inputB" placeholder="B">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputC" class="col-sm-9 control-label">Estimated Annual <a href="#" class="mb-tooltip">Merchandise Processing Fee<span class="mb-tooltip-content">Enter value without dollar sign or commas.</span></a></label>
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control" id="inputC" placeholder="C">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputD" class="col-sm-9 control-label">Estimated Annual <a href="#" class="mb-tooltip">Broker Fees<span class="mb-tooltip-content">Enter value without dollar sign or commas.</span></a></label>
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control" id="inputD" placeholder="D">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputE" class="col-sm-9 control-label">Estimated <a href="#" class="mb-tooltip">Percentage of Annual Exports from US<span class="mb-tooltip-content">Example: if 5%, enter 5 (no percent symbol) here.</span></a></label>
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control" id="inputE" placeholder="E">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputF" class="col-sm-9 control-label">Estimated Inventory Turns per Year</label>
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control" id="inputF" placeholder="F">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputG" class="col-sm-9 control-label"><a href="#" class="mb-tooltip">Interest Rate (Company Cost of Capital)<span class="mb-tooltip-content">Example: if 5%, enter 5 (no percent symbol) here.</span></a></label>
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control" id="inputG" placeholder="G">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputH" class="col-sm-9 control-label"><a href="#" class="mb-tooltip">Local Ad Valorem Inventory Tax Rate Per $100 Value<span class="mb-tooltip-content">Example: if $2.648 per $100 of value, enter 2.648 here.</span></a></label>
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control" id="inputH" placeholder="H">
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <label for="inputI" class="col-sm-9 control-label">Estimated <a href="#" class="mb-tooltip">Percentage Freeport Eligible Inventory<span class="mb-tooltip-content">Example: if 30%, enter 30 (no percent symbol) here.</span></a><br/><span style="font-weight: normal;">Different taxing jurisdictions throughout FTZ 183's Service Area have adopted freeport. If a taxing jurisdiction has adopted freeport, it will impact the amount of FTZ savings related to inventory tax.  You should identify the applicable taxing jurisdictions for your company’s location and then determine whether the jurisdictions have adopted freeport.  The applicable county assessor's website will be very useful in gathering information on the different jurisdictions, taxing rates and freeport. A freeport exemptions map is also provided in the RESOURCES box on this page.</span></label>
+
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control" id="inputI" placeholder="I">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-9 col-sm-3">
+                            <a onClick="calculate()" class="btn btn-default">Calculate</a>
+                            <a href="../../../site-selection/taxes-incentives/incentives/calculator.html" class="btn btn-default">Reset</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-6 results">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="outputMPF" class="col-sm-9 control-label">Merchandise Processing Fee Reduction</label>
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control" id="outputMPF" placeholder="MPF">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="outputBFR" class="col-sm-9 control-label">Broker Fee Reduction</label>
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control" id="outputBFR" placeholder="BFR">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="outputLT" class="col-sm-9 control-label">Local Ad Valorem Inventory Tax<br/>
+
+                        <ul style="padding: 5px 16px;">
+                        <li style="font-weight: normal; padding: 0 10px;">The calculation assumes all the taxing jurisdictions have adopted Freeport. Note that the FTZ savings amount will be larger if the facility is located in a non Freeport jurisdiction/s.</li>
+
+                        <li style="font-weight: normal; padding: 0 10px;">This calculator assumes that only imported merchandise qualifies for FTZ inventory tax savings. Savings may be greater if domestic merchandise also qualifies. FTZ inventory tax savings applies to "Tangible personal property imported from outside the United States and held in a zone ... and tangible personal property produced in the United States and held in a zone for exportation..." 19 USC § 81(e)o.</li></ul></label>
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control" id="outputLT" placeholder="LT">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="outputEX" class="col-sm-9 control-label">Duty Elimination -  Exports </label>
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control" id="outputEX" placeholder="EX">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="outputTOTAL_SAVINGS" class="col-sm-9 control-label">TOTAL ESTIMATED ANNUAL SAVINGS</label>
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control" id="outputTOTAL_SAVINGS" placeholder="TOTAL SAVINGS">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="outputCF" class="col-sm-9 control-label">One Turn Cash Flow Savings - Perpetual Duty Expense Deferral<br/>
+                        <span style="font-weight: normal;">Importers can obtain a long-term cash flow savings advantage by “permanently” deferring the payment of duty for one inventory turn of merchandise held in a zone for as long as the zone remains operational.</span></label>
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control" id="outputCF" placeholder="CF">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                    <p style="padding: 0 20px">This calculator should be used only as a guide in calculating potential FTZ benefits. It provides only gross savings estimates, and does not take into account FTZ operations. Typically, companies with FTZ gross savings of over $100,000 may find the FTZ an attractive option.</p>
+
+                    <p style="padding: 0 20px">We encourage companies to conduct a formal cost benefit analysis to arrive at a more accurate savings number. There may be additional savings opportunities not addressed by the above calculator. The cost benefit analysis will also allow a company to evaluate any operational impact of the FTZ on the company's current operations. </p>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
